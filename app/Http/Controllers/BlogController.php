@@ -45,4 +45,9 @@ class BlogController extends Controller
    public function createBlog(){
      return view('create');
    }
+
+   public function blogDetail(){
+      return view('blog-detail');
+    }
+   
 }

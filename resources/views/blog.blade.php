@@ -16,18 +16,20 @@
 <!------ Include the above in your HEAD tag ---------->
 
 <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.1.0/css/font-awesome.min.css"/>
-<br> <br>
+   
 <div class="container">
 
 @foreach ($blogs as $blog) 
-@can('view-blog', $blog)
-    <div class="well">
+    
+    <div class="well"> 
       <div class="media">
       	<a class="pull-left" href="#">
     		<img class="media-object" src="http://placekitten.com/150/150">
   		</a>
   		<div class="media-body">
-    		<h4 class="media-heading">{{$blog->title}}</h4>
+      <a href="{{url('/blog-detail/'.$blog->id)}}" target="blank"> 
+      <h4 class="media-heading">{{$blog->title}}</h4>
+      </a>
           <p class="text-right">{{$blog->user->name}}</p>
           <p> .</p>
           <ul class="list-inline list-unstyled">
@@ -41,8 +43,7 @@
                         <span class="glyphicon glyphicon-star"></span>
                         <span class="glyphicon glyphicon-star"></span>
                         <span class="glyphicon glyphicon-star-empty"></span>
-            </li>
-            <li>|</li>
+            </li> 
             <li>
             <!-- Use Font Awesome http://fortawesome.github.io/Font-Awesome/ -->
               <span><i class="fa fa-facebook-square"></i></span>
@@ -53,7 +54,7 @@
        </div>
     </div>
   </div>  
-  @endcan
+   
 @endforeach
     
 </div>
