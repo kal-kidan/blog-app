@@ -18,11 +18,8 @@ Route::get('/', function () {
 });
 
 Route::get('/blogs','BlogController@index')->name('blogs');
-<<<<<<< HEAD
-Route::get('/create','BlogController@store')->name('store');
-=======
-Route::get('/create','BlogController@store')->name('store'); 
->>>>>>> kal-dev
+Route::post('/create','BlogController@store')->name('store');  
+Route::get('/create-blog','BlogController@createBlog');  
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');

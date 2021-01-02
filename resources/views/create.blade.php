@@ -1,23 +1,30 @@
 @extends('layouts.app')
 
 @section('content')
-@if($errors->any())
-    <div class="alert alert-danger">
-        @foreach($errors->all() as $error)
-            <p>{{ $error }}</p>
-        @endforeach
-    </div>
-@endif
- <form class="container">
- 
-  <div class="form-group" action="{{url("blog")}}">
+<div class="alert alert-success text-white p-3 success-message container" style="<?php if (!session()->has('message')) {
+  echo "display:none";
+} ?>">
+  <?php echo session('message') ?? '' ?> <br>
+</div>
+ <form class="container" action="{{url("create")}}" method="post" enctype="multipart/form-data">
+   @csrf
+  <div class="form-group" >
     <label for="exampleInputEmail1">Blog Title</label>
-    <input type="text" name="title" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter title">
-    <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+    <input type="text" name="title" class="form-control"    placeholder="Enter title">
+    <small  class="form-text text-muted">Good title can help get more views.</small>
+     <small class="errors"> {{$errors->first('title')}} </small>
+  </div>
+  <div class="form-group">
+    <label for="exampleInputEmail1">Blog Image</label>
+    <input type="file" name="image" class="form-control" > 
+    <small class="errors"> {{$errors->first('image')}} </small>
   </div>
   <div class="form-group">
     <label for="exampleInputPassword1">Blog Content</label>
-    <input type="text" class="form-control" name="content" id="exampleInputPassword1" placeholder="Enter content">
+    <textarea   class="form-control" name="content"   placeholder="Enter content"> 
+    </textarea>
+    <small class="errors">  {{$errors->first('content')}} </small>
+ </div>
   <button type="submit" class="btn btn-primary">Create</button>
 </form>
 @endsection

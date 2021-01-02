@@ -12,40 +12,37 @@ class BlogController extends Controller
         $blogs = Blog::all();
         $user = User::find($request->id);
         return view('blog')->with(array('blogs'=>$blogs, 'user'=>$user)); 
-      // $blog = Blog::find(3);
-      // if (Gate::allows('view-blog', $post)) {
-      //   echo 'Allowed';
-      // } else {
-      //   echo 'Not Allowed';
-      // }
+ 
    }
 
    public function store(Request $request)
-<<<<<<< HEAD
-   {
-      if(Gate::allows('create')){
-         $input = ["title"=>"Example Post","content"=>"Example content", "user_id"=>Auth::id()]; 
-          Blog::create($input);
-          echo "created successfuly";
-        }
-        else{
-           echo "you are not allowed to create a blog";
-        }
-=======
+ 
    { 
-     if(Gate::allows('create')){
-      $input = ["title"=>"Example Post","content"=>"Example content", "user_id"=>Auth::id()]; 
-       Blog::create($input);
-       echo "created successfuly";
-     }
-     else{
-        echo "you are not allowed to create a blog";
-     }
-       
-   
+    $errors = $this->validate($request, [
+       'title' => 'required|string|max:250',
+       'image' => 'required|image',
+       'content' => 'required|string|max:5000'
+    ]);
+     
+      $image=$request->file('image');
+      $uploadedImage = "img-blog".time().rand(1000,1000000000).".".$image->extension();
+      $image->move('uploads', $uploadedImage);
+      $path="uploads/".$uploadedImage;
+      $blog=new Blog;
+      $blog->user_id=Auth::id();
+      $blog->title = $request->input('title');
+      $blog->content = $request->input('content');  
+      $blog->image = $path;
+      $blog->save();
+      return redirect()->back()->with('message','you successfully posted a blog!');
+      
+    
       //  Session::flash('flash_message', 'Task successfully added!');
-   
       //  return redirect()->back();
->>>>>>> kal-dev
+ 
+   }
+
+   public function createBlog(){
+     return view('create');
    }
 }
