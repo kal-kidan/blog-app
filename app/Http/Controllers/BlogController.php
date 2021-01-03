@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Gate;
 use Illuminate\Http\Request;
 use App\User;
 use App\Blog;
+use App\Comment;
 use Auth;
 class BlogController extends Controller
 {
@@ -34,11 +35,7 @@ class BlogController extends Controller
       $blog->content = $request->input('content');  
       $blog->image = $path;
       $blog->save();
-      return redirect()->back()->with('message','you successfully posted a blog!');
-      
-    
-      //  Session::flash('flash_message', 'Task successfully added!');
-      //  return redirect()->back();
+      return redirect()->back()->with('message','you successfully posted a blog!'); 
  
    }
 
@@ -46,8 +43,23 @@ class BlogController extends Controller
      return view('create');
    }
 
-   public function blogDetail(){
-      return view('blog-detail');
+   public function blogDetail($id){
+      $blog = Blog::find($id);
+      $comments = Comment::where('post_id', $id)->orderBy('created_at', 'desc')->take(5)->get(); 
+      return view('blog-detail')->with(['blog' => $blog, 'comments' => $comments ]);
+    }
+
+    public function addComment(Request $request, $post_id){
+       $comment = new Comment;
+       $comment->content = $request->content;
+       $comment->post_id = $post_id;
+       $comment->user_id = Auth::id();
+       $comment->save();
+       $blog = Blog::find($comment->post_id);
+       $comments = Comment::orderBy('created_at', 'desc')->take(5)->get();
+       redirect()->route('blog-detail', $post_id);
+       return view('blog-detail')->with(['blog' => $blog, 'comments' => $comments ]);
+      //  return view('blog-detail')->with(array('comments', $comments));
     }
    
 }
