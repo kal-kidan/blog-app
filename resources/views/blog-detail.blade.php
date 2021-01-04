@@ -64,8 +64,14 @@
                                     <h5 class="mt-0 font400 clearfix">
                                         <a href="#" class="float-right">Reply</a>
                                         {{ $comment->user->name }}
-                                    </h5>{{ $comment->content }}
+                                    </h5>{!! $comment->content !!}
+                                    @if(Auth::id()==$comment->user_id)
+                                    <div >
+                                        <a href='{{url("delete-comment/$comment->id")}}'> delete </a>
+                                    </div>
+                                    @endif
                                 </div>
+
                             </div>
                         @endforeach
                         <div class="media mb40">
@@ -82,17 +88,17 @@
 
                         <hr class="mb40">
                         <h4 class="mb40 text-uppercase font500">Post a comment</h4>
-                        <form role="form" method="post" action="{{ url('/add-comment') }}/{{ $blog->id }}">
+                        <form role="form" method="post" action="{{ url('comment') }}/{{ $blog->id }}">
                             @csrf
                             <div class="form-group">
                                 <label>Comment</label>
-                                <textarea class="form-control" id="summernote" rows="5" name="content"
+                                <textarea class="form-control" id="summernote" rows="8" name="content"
                                     placeholder="Comment"></textarea>
                             </div>
                             <div class="clearfix float-right">
                                 <button type="submit" class="btn btn-primary btn-lg">Submit</button>
                             </div>
-                        </form> 
+                        </form>
                     </div>
                 </article>
                 <!-- post article-->

@@ -22,4 +22,9 @@ class CommentController extends Controller
         return view('blog-detail')->with(['blog' => $blog, 'comments' => $comments ]);
        //  return view('blog-detail')->with(array('comments', $comments));
      }
+
+     public function deleteComment(Request $request, $id){
+       Comment::where('id', $id)->delete();
+       return redirect()->back();
+     }
 }

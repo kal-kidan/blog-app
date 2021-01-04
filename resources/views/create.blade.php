@@ -3,7 +3,7 @@
 @section('content')
 <div class="alert alert-success text-white p-3 success-message container" style="<?php if (!session()->has('message')) {
   echo "display:none";
-} ?>">
+} ?>"> 
   <?php echo session('message') ?? '' ?> <br>
 </div>
  <form class="container" action="{{url("create")}}" method="post" enctype="multipart/form-data">

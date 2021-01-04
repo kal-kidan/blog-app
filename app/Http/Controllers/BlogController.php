@@ -10,7 +10,7 @@ use Auth;
 class BlogController extends Controller
 {
    public function index(Request $request){
-        $blogs = Blog::all();
+        $blogs = Blog::orderBy('created_at', 'desc')->get();
         $user = User::find($request->id);
         return view('blog')->with(array('blogs'=>$blogs, 'user'=>$user)); 
  
@@ -47,19 +47,6 @@ class BlogController extends Controller
       $blog = Blog::find($id);
       $comments = Comment::where('post_id', $id)->orderBy('created_at', 'desc')->take(5)->get(); 
       return view('blog-detail')->with(['blog' => $blog, 'comments' => $comments ]);
-    }
-
-    public function addComment(Request $request, $post_id){
-       $comment = new Comment;
-       $comment->content = $request->content;
-       $comment->post_id = $post_id;
-       $comment->user_id = Auth::id();
-       $comment->save();
-       $blog = Blog::find($comment->post_id);
-       $comments = Comment::orderBy('created_at', 'desc')->take(5)->get();
-       redirect()->route('blog-detail', $post_id);
-       return view('blog-detail')->with(['blog' => $blog, 'comments' => $comments ]);
-      //  return view('blog-detail')->with(array('comments', $comments));
     }
    
 }
