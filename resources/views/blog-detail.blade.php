@@ -62,18 +62,33 @@
                                 <i class="d-flex mr-3 fa fa-user-circle-o fa-3x"></i>
                                 <div class="media-body">
                                     <h5 class="mt-0 font400 clearfix">
-                                        <a href="#" class="float-right">Reply</a>
+                                        <button class="float-right btn btn-primary" style="color:white"
+                                            onclick="reply({{ $comment->id }})">Reply</button>
                                         {{ $comment->user->name }}
                                     </h5>{!! $comment->content !!}
-                                    @if(Auth::id()==$comment->user_id)
-                                    <div >
-                                        <a href='{{url("delete-comment/$comment->id")}}'> delete </a>
-                                    </div>
+                                    @if (Auth::id() == $comment->user_id)
+                                        <div>
+                                            <a href='{{ url("delete-comment/$comment->id") }}' class="btn btn-primary"
+                                                style="color:white"> delete </a>
+                                        </div>
                                     @endif
                                 </div>
-
+                                <form role="form" method="post" action="{{ url('add-reply') }}" id="reply-form{{$comment->id}}"
+                                    style="display:none; margin-left:40px">
+                                    @csrf
+                                    <input type="hidden" value="" id="comment-id" name="commentId">
+                                    <div class="form-group">
+                                        <label>Reply</label>
+                                        <textarea class="form-control summernote2" rows="8" name="replyContent"
+                                            placeholder="write your reply here .."></textarea>
+                                    </div>
+                                    <div class="clearfix float-right">
+                                        <button type="submit" class="btn btn-primary">Submit</button>
+                                    </div>
+                                </form>
                             </div>
                         @endforeach
+
                         <hr class="mb40">
                         <h4 class="mb40 text-uppercase font500">Post a comment</h4>
                         <form role="form" method="post" action="{{ url('add-comment') }}/{{ $blog->id }}">
@@ -90,7 +105,7 @@
                     </div>
                 </article>
                 <!-- post article-->
-    
+
             </div>
             <div class="col-md-3 mb40">
                 <div class="mb40">
@@ -149,4 +164,13 @@
             </div>
         </div>
     </div>
+@section('scripts')
+    <script>
+        function reply(comment_id) {
+            document.getElementById("comment-id").value = comment_id;
+            document.getElementById("reply-form"+comment_id).style.display = "block";
+        }
+
+    </script>
+@endsection
 @endsection
