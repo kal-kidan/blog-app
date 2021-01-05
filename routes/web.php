@@ -17,12 +17,17 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/blogs','BlogController@index')->name('blogs');
-Route::post('/create','BlogController@store')->name('store');  
-Route::post('/add-comment/{id}','CommentController@addComment'); 
-Route::get('/delete-comment/{id}','CommentController@deleteComment'); 
-Route::get('/create-blog','BlogController@createBlog'); 
-Route::get('/blog-detail/{id}','BlogController@blogDetail')->name('blog-detail'); 
+Route::group(['middleware' => 'auth'], function() {
+    Route::get('/blogs','BlogController@index')->name('blogs');
+    Route::post('/create','BlogController@store')->name('store');  
+    Route::post('/add-comment/{id}','CommentController@addComment'); 
+    Route::post('/add-reply','ReplyController@addReply');
+    Route::get('/delete-comment/{id}','CommentController@deleteComment'); 
+    Route::get('/create-blog','BlogController@createBlog'); 
+    Route::get('/blog-detail/{id}','BlogController@blogDetail')->name('blog-detail'); 
+});
+
+
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');

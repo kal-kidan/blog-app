@@ -58,34 +58,46 @@
                         <hr class="mb40">
                         <h4 class="mb40 text-uppercase font500">Comments</h4>
                         @foreach ($comments as $comment)
-                            <div class="media mb40">
+                            <div class="media mb40" style="margin: 0px">
                                 <i class="d-flex mr-3 fa fa-user-circle-o fa-3x"></i>
                                 <div class="media-body">
                                     <h5 class="mt-0 font400 clearfix">
-                                        <button class="float-right btn btn-primary" style="color:white"
+                                        <button class="float-right btn btn-primary"
                                             onclick="reply({{ $comment->id }})">Reply</button>
+                                        <button class="float-right btn btn-primary mr-3"
+                                            onclick="showReply({{ $comment->id }})" id="reply-button">Show Reply</button>
+                                        @if (Auth::id() == $comment->user_id)
+                                            <div class="float-right">
+                                                <a href='{{ url("delete-comment/$comment->id") }}'
+                                                    class=" btn btn-primary mr-3" style="color:white"> delete
+                                                </a>
+                                            </div>
+                                        @endif
                                         {{ $comment->user->name }}
                                     </h5>{!! $comment->content !!}
-                                    @if (Auth::id() == $comment->user_id)
-                                        <div>
-                                            <a href='{{ url("delete-comment/$comment->id") }}' class="btn btn-primary"
-                                                style="color:white"> delete </a>
-                                        </div>
-                                    @endif
+
                                 </div>
-                                <form role="form" method="post" action="{{ url('add-reply') }}" id="reply-form{{$comment->id}}"
-                                    style="display:none; margin-left:40px">
+                                <form role="form" method="post" action="{{ url('add-reply') }}"
+                                    id="reply-form{{ $comment->id }}" style="display:none; margin-left:40px">
                                     @csrf
-                                    <input type="hidden" value="" id="comment-id" name="commentId">
+                                    <input type="hidden" value="" id="comment-id" name="comment_id">
                                     <div class="form-group">
                                         <label>Reply</label>
-                                        <textarea class="form-control summernote2" rows="8" name="replyContent"
+                                        <textarea class="form-control summernote2" rows="8" name="content"
                                             placeholder="write your reply here .."></textarea>
                                     </div>
                                     <div class="clearfix float-right">
                                         <button type="submit" class="btn btn-primary">Submit</button>
                                     </div>
                                 </form>
+                            </div>
+                            <div style="display:none" id="replies{{ $comment->id }}">
+                                @foreach ($comment->replies as $reply)
+                                    <div style="margin-left: 50px; background: gray; padding:3px; color:white;">
+                                        <i class="fa fa-user" style="font-size: 20px"> {{ $comment->user->name }} </i>
+                                        <p style="margin-left: 40px"> {!! $reply->content !!} </p>
+                                    </div>
+                                @endforeach
                             </div>
                         @endforeach
 
@@ -168,7 +180,20 @@
     <script>
         function reply(comment_id) {
             document.getElementById("comment-id").value = comment_id;
-            document.getElementById("reply-form"+comment_id).style.display = "block";
+            document.getElementById("reply-form" + comment_id).style.display = "block";
+        }
+
+
+        function showReply(comment_id) {
+            var btn = document.getElementById("reply-button").innerHTML;
+            if(btn == "Show Reply"){
+                 document.getElementById("reply-button").innerHTML = "Hide Reply";
+                 document.getElementById("replies" + comment_id).style.display = "block";
+            }
+            else{
+                document.getElementById("reply-button").innerHTML = "Show Reply";
+                document.getElementById("replies" + comment_id).style.display = "none";
+            } 
         }
 
     </script>

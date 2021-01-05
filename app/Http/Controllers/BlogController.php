@@ -21,6 +21,7 @@ class BlogController extends Controller
    { 
     $errors = $this->validate($request, [
        'title' => 'required|string|max:250',
+       'tag' => 'required|string|max:250',
        'image' => 'required|image',
        'content' => 'required|string|max:5000'
     ]);
@@ -32,6 +33,7 @@ class BlogController extends Controller
       $blog=new Blog;
       $blog->user_id=Auth::id();
       $blog->title = $request->input('title');
+      $blog->tag = $request->input('tag');
       $blog->content = $request->input('content');  
       $blog->image = $path;
       $blog->save();

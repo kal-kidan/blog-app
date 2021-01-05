@@ -32,7 +32,7 @@
       <h4 class="media-heading">{{$blog->title}}</h4>
       </a>
           <p class="text-right">{{$blog->user->name}}</p>
-          <p> {{$blog->content}} </p>
+          <p> {{substr($blog->content,0,100)}} ..</p>
           <ul class="list-inline list-unstyled">
   			<li><span><i class="glyphicon glyphicon-calendar"></i> 2 days, 8 hours </span></li>
             <li></li>

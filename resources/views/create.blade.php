@@ -20,6 +20,11 @@
     <small class="errors"> {{$errors->first('image')}} </small>
   </div>
   <div class="form-group">
+    <label for="tags">Tag</label>
+    <input type="text" name="tag" class="form-control" > 
+    <small class="errors"> {{$errors->first('tag')}} </small>
+  </div>
+  <div class="form-group">
     <label for="exampleInputPassword1">Blog Content</label>
     <textarea   class="form-control" name="content"   placeholder="Enter content"> 
     </textarea>
