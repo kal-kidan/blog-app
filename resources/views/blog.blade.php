@@ -18,7 +18,9 @@
 <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.1.0/css/font-awesome.min.css"/>
    
 <div class="container">
-
+@php
+use Carbon\Carbon;
+@endphp
 @foreach ($blogs as $blog) 
     
     <div class="well"> 
@@ -34,10 +36,9 @@
           <p class="text-right">{{$blog->user->name}}</p>
           <p> {{substr($blog->content,0,100)}} ..</p>
           <ul class="list-inline list-unstyled">
-  			<li><span><i class="glyphicon glyphicon-calendar"></i> 2 days, 8 hours </span></li>
+  			<li><span><i class="glyphicon glyphicon-calendar"></i> {{Carbon::parse($blog->created_at)->isoFormat('dddd D')}} </span></li>
             <li></li>
-            <span><i class="glyphicon glyphicon-comment"></i> {{count($blog->comments)}} </span>
-            <li>|</li>
+            <span><i class="glyphicon glyphicon-comment"></i> {{count($blog->comments)}} </span> 
             <li>
                <span class="glyphicon glyphicon-star"></span>
                         <span class="glyphicon glyphicon-star"></span>
@@ -54,11 +55,10 @@
 			</ul>
        </div>
     </div>
-  </div>  
+  </div>   
    
 @endforeach
-    
-</div>
+</div> 
     </body>
 </html>
 

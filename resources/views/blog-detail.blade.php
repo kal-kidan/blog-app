@@ -63,7 +63,7 @@
                                 <div class="media-body">
                                     <h5 class="mt-0 font400 clearfix">
                                         <button class="float-right btn btn-primary"
-                                            onclick="reply({{ $comment->id }})">Reply</button>
+                                            onclick="reply({{ $comment->id }})">Reply</button> 
                                         <button class="float-right btn btn-primary mr-3"
                                             onclick="showReply({{ $comment->id }})" id="reply-button">Show Reply</button>
                                         @if (Auth::id() == $comment->user_id)
@@ -182,7 +182,6 @@
             document.getElementById("comment-id").value = comment_id;
             document.getElementById("reply-form" + comment_id).style.display = "block";
         }
-
 
         function showReply(comment_id) {
             var btn = document.getElementById("reply-button").innerHTML;
