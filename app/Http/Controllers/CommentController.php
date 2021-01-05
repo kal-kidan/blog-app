@@ -16,11 +16,11 @@ class CommentController extends Controller
         $comment->post_id = $post_id;
         $comment->user_id = Auth::id();
         $comment->save();
-        $blog = Blog::find($comment->post_id);
-        $comments = Comment::orderBy('created_at', 'desc')->take(5)->get();
-        redirect()->route('blog-detail', $post_id);
-        return view('blog-detail')->with(['blog' => $blog, 'comments' => $comments ]);
-       //  return view('blog-detail')->with(array('comments', $comments));
+        return redirect()->to("blog-detail/$post_id");
+       // redirect()->route('blog-detail', $post_id);
+        // $blog = Blog::find($comment->post_id);
+        // $comments = Comment::orderBy('created_at', 'desc')->take(5)->get();  
+        //return view('blog-detail')->with(['blog' => $blog, 'comments' => $comments ]); 
      }
 
      public function deleteComment(Request $request, $id){

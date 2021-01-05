@@ -24,18 +24,19 @@
     <div class="well"> 
       <div class="media">
       	<a class="pull-left" href="#">
-    		<img class="media-object" src="http://placekitten.com/150/150">
+        {{-- http://placekitten.com/150/150 --}}
+    		<img class="media-object" src="{{$blog->image}}" width="130px" height="100px">
   		</a>
   		<div class="media-body">
       <a href="{{url('/blog-detail/'.$blog->id)}}" target="blank"> 
       <h4 class="media-heading">{{$blog->title}}</h4>
       </a>
           <p class="text-right">{{$blog->user->name}}</p>
-          <p> .</p>
+          <p> {{$blog->content}} </p>
           <ul class="list-inline list-unstyled">
   			<li><span><i class="glyphicon glyphicon-calendar"></i> 2 days, 8 hours </span></li>
-            <li>{{$blog->content}}</li>
-            <span><i class="glyphicon glyphicon-comment"></i> 2 comments</span>
+            <li></li>
+            <span><i class="glyphicon glyphicon-comment"></i> {{count($blog->comments)}} </span>
             <li>|</li>
             <li>
                <span class="glyphicon glyphicon-star"></span>
