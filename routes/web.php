@@ -16,7 +16,9 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
-
+Route::post('/test', function(){
+    return response(['name'=>'kalkidan'], 200);
+});
 Route::group(['middleware' => 'auth'], function() {
     Route::get('/blogs','BlogController@index')->name('blogs');
     Route::post('/create','BlogController@store')->name('store');  

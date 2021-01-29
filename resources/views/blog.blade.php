@@ -34,7 +34,7 @@ use Carbon\Carbon;
       <h4 class="media-heading">{{$blog->title}}</h4>
       </a>
           <p class="text-right">{{$blog->user->name}}</p>
-          <p> {{substr($blog->content,0,100)}} ..</p>
+          <p> {{substr($blog->content,0,100)}} ..</p> 
           <ul class="list-inline list-unstyled">
   			<li><span><i class="glyphicon glyphicon-calendar"></i> {{Carbon::parse($blog->created_at)->isoFormat('dddd D')}} </span></li>
             <li></li>
